@@ -1,0 +1,72 @@
+task: restoration
+seed: 42
+
+model:
+  name: pqdt
+  trans_dim: 384
+  num_heads: 6
+  enc_attn: [ge_attn, attn, attn, attn]
+  dec_attn: [ge_attn, attn, attn, attn, attn, attn, attn, attn]
+  num_queries: 512
+  num_pseudo: 384
+  tau0: 1.0
+  r_sph: 0.8
+  in_q: false
+  up_n_knn: 8
+  up_radius: 1.0
+  up_factors: [1, 4, 4]
+  up_interpolate: three
+  up_attn_channel: true
+
+dataset:
+  name: shapenet_occ
+  dataset_dir: /home/ubuntu/dataset
+  train_split: train
+  val_split: test
+  test_split: test
+  n_points: 8192
+  cars_only: true
+  n_renderings: 96
+  crop_mode: median
+
+dataloader:
+  train_batch_size: 16
+  val_batch_size: 16
+  test_batch_size: 1
+  num_workers: 16
+  val_num_workers: 8
+  test_num_workers: 1
+  pin_memory: true
+
+trainer:
+  max_epochs: 200
+  accelerator: auto
+  devices: 1
+  log_every_n_steps: 25
+  check_val_every_n_epoch: 10
+  model_summary_depth: 2
+
+optimizer:
+  name: adam
+  lr: 0.0001
+  weight_decay: 0.0
+  fused: true
+
+scheduler:
+  name: warm_cosine
+  end_lr: 0.00001
+  warmup_epochs: 10
+
+logger:
+  log_dir: ./lightning_logs
+  name: restoration-pqdt-shapenet-occ
+
+checkpoint:
+  dirpath: ./lightning_logs/ckpts/
+  monitor: val/cd2
+  mode: min
+  save_top_k: 1
+  save_last: true
+  every_n_epochs: 10
+  resume_path:
+  test_path: ./lightning_logs/ckpts/M4CShapeNet-Occ_ShapeNet.ckpt

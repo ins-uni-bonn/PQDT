@@ -90,14 +90,16 @@ If `--ckpt` is omitted, `checkpoint.test_path` from the config is used.
 
 ## Citation
 
-If you find this repository useful, please cite our paper:
+If you find this repository useful, please cite our paper (to be updated):
 
 ```bibtex
-@inproceedings{,
-  title={},
-  author={},
-  booktitle={},
-  volume={},
-  year={}
+@misc{wu2026pqdt,
+      title={PQDT: Pseudo-Query Dual Transformer for Robust Point Cloud Restoration}, 
+      author={Haoqing Wu and Alexa Nawotki and Jochen Garcke},
+      year={2026},
+      eprint={2605.25127},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.25127}, 
 }
 ```
